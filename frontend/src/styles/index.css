@@ -1,0 +1,329 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body, #root {
+    height: 100%;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #080810;
+    color: #f1f5f9;
+  }
+
+  /* Hide default cursor so our custom MouseCursor glow is the only one */
+  body { overflow-x: hidden; }
+  html { cursor: none; }
+  /* Restore text cursor in editors/inputs so Monaco still works */
+  input, textarea, [contenteditable], .monaco-editor, .monaco-editor * {
+    cursor: text !important;
+  }
+  /* Restore pointer on buttons and links explicitly */
+  button, a, [role="button"], select {
+    cursor: pointer !important;
+  }
+
+  code, pre, .mono {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+════════════════════════════════════════════════════════════════════ */
+
+/* Typewriter cursor blink */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Button shimmer sweep */
+@keyframes shimmer-sweep {
+  from { transform: translateX(-180%); }
+  to   { transform: translateX(280%); }
+}
+
+/* Spin */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-9px); }
+}
+
+/* Glow pulse on logo */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(124,58,237,0.45), 0 0 60px rgba(124,58,237,0.15); }
+  50%       { box-shadow: 0 0 70px rgba(124,58,237,0.8),  0 0 140px rgba(124,58,237,0.3), 0 0 200px rgba(6,182,212,0.1); }
+}
+
+/* Dot pulse for status indicator */
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px #10b981; }
+  50%       { opacity: 0.5; box-shadow: 0 0 2px #10b981; }
+}
+
+/* ── Loading screen orbit rings ── */
+@keyframes orbit-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes orbit-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* ── Neon text glow ── */
+@keyframes neon-text-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 8px  rgba(167,139,250,0.6),
+      0 0 20px rgba(124,58,237,0.4),
+      0 0 50px rgba(124,58,237,0.2);
+  }
+  50% {
+    text-shadow:
+      0 0 15px rgba(167,139,250,0.9),
+      0 0 40px rgba(124,58,237,0.7),
+      0 0 80px rgba(124,58,237,0.35),
+      0 0 120px rgba(6,182,212,0.15);
+  }
+}
+
+/* ── Gradient border animation ── */
+@keyframes gradient-rotate {
+  0%   { --bg-angle: 0deg; }
+  100% { --bg-angle: 360deg; }
+}
+@keyframes bg-gradient-shift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+/* ── Floating decorative shapes ── */
+@keyframes float-a {
+  0%, 100% { transform: translateY(0)    rotate(0deg);   opacity: 0.55; }
+  33%       { transform: translateY(-22px) rotate(6deg);  opacity: 0.8;  }
+  66%       { transform: translateY(-10px) rotate(-4deg); opacity: 0.65; }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(0)    rotate(0deg);   opacity: 0.4; }
+  50%       { transform: translateY(18px) rotate(-8deg);  opacity: 0.7; }
+}
+@keyframes float-c {
+  0%, 100% { transform: translateY(0)   rotate(0deg);   opacity: 0.5; }
+  40%       { transform: translateY(-15px) rotate(5deg); opacity: 0.75; }
+}
+
+/* ── Scan line (loading effect) ── */
+@keyframes scan {
+  0%   { top: -8px; }
+  100% { top: 100%; }
+}
+
+/* ── Editor border glow ── */
+@keyframes editor-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(124,58,237,0.25),
+      0 0 20px rgba(124,58,237,0.1),
+      0 8px 40px rgba(0,0,0,0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(124,58,237,0.5),
+      0 0 40px rgba(124,58,237,0.2),
+      0 0 80px rgba(6,182,212,0.08),
+      0 8px 40px rgba(0,0,0,0.4);
+  }
+}
+
+/* ── Progress bar sweep ── */
+@keyframes progress-sweep {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* ── Ripple effect on click ── */
+@keyframes ripple {
+  from { transform: scale(0); opacity: 0.5; }
+  to   { transform: scale(4); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   UTILITY CLASSES
+═══════════════════════════════════════════════════════ */
+
+.spin    { animation: spin 0.8s linear infinite; }
+.float   { animation: float 4.5s ease-in-out infinite; }
+.float-a { animation: float-a 7s ease-in-out infinite; }
+.float-b { animation: float-b 9s ease-in-out infinite; }
+.float-c { animation: float-c 6s ease-in-out infinite; }
+
+.orbit-cw  { animation: orbit-cw  8s linear infinite; }
+.orbit-ccw { animation: orbit-ccw 12s linear infinite; }
+
+.cursor {
+  display: inline-block;
+  width: 2px; height: 1.1em;
+  background: #7c3aed;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursor-blink 0.85s ease-in-out infinite;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 35%, #7c3aed 65%, #06b6d4 100%);
+  background-size: 200% auto;
+  animation: bg-gradient-shift 4s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Neon text glow class */
+.neon-text {
+  animation: neon-text-glow 3s ease-in-out infinite;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.glass-strong {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Panel scroll */
+.panel-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+.panel-scroll::-webkit-scrollbar { width: 4px; }
+.panel-scroll::-webkit-scrollbar-track { background: transparent; }
+.panel-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+}
+.panel-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* ── 3D Card Perspective container ── */
+.perspective {
+  perspective: 900px;
+  perspective-origin: center;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* ── Card hover glows ── */
+.card-bug {
+  transition: box-shadow 0.3s ease, transform 0.25s ease, border-color 0.3s ease;
+}
+.card-bug:hover {
+  box-shadow:
+    0 8px 32px rgba(239,68,68,0.18),
+    0 0 0 1px rgba(239,68,68,0.25),
+    0 2px 8px rgba(0,0,0,0.3) !important;
+  border-color: rgba(239,68,68,0.35) !important;
+  transform: translateY(-3px) !important;
+}
+
+.card-opt {
+  transition: box-shadow 0.3s ease, transform 0.25s ease, border-color 0.3s ease;
+}
+.card-opt:hover {
+  box-shadow:
+    0 8px 32px rgba(245,158,11,0.18),
+    0 0 0 1px rgba(245,158,11,0.25),
+    0 2px 8px rgba(0,0,0,0.3) !important;
+  border-color: rgba(245,158,11,0.35) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ── Editor wrapper glow ── */
+.editor-wrapper {
+  animation: editor-glow 3.5s ease-in-out infinite;
+  border-radius: 14px;
+  transition: all 0.3s;
+}
+.editor-wrapper:focus-within {
+  box-shadow:
+    0 0 0 1px rgba(124,58,237,0.6),
+    0 0 50px rgba(124,58,237,0.25),
+    0 0 100px rgba(6,182,212,0.08) !important;
+}
+
+/* Animated gradient border for editor container */
+.editor-frame {
+  position: relative;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.4), rgba(6,182,212,0.2), rgba(124,58,237,0.4));
+  background-size: 200% 200%;
+  animation: bg-gradient-shift 4s ease infinite;
+}
+.editor-frame > * {
+  border-radius: 13px;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MONACO EDITOR DECORATIONS
+════════════════════════════════════════════════════════════════════ */
+
+/* Bug line */
+.monaco-editor .cm-bug-line {
+  background: rgba(239,68,68,0.1) !important;
+  border-left: 2px solid #ef4444 !important;
+}
+
+/* Optimization line */
+.monaco-editor .cm-opt-line {
+  background: rgba(245,158,11,0.07) !important;
+  border-left: 2px solid #f59e0b !important;
+}
+
+/* Flash animations on click */
+@keyframes line-flash-red {
+  0%   { background: rgba(239,68,68,0.4) !important; }
+  100% { background: rgba(239,68,68,0.12) !important; }
+}
+@keyframes line-flash-amber {
+  0%   { background: rgba(245,158,11,0.35) !important; }
+  100% { background: rgba(245,158,11,0.08) !important; }
+}
+.monaco-editor .cm-flash-bug {
+  animation: line-flash-red 1.4s ease-out forwards !important;
+}
+.monaco-editor .cm-flash-opt {
+  animation: line-flash-amber 1.4s ease-out forwards !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   FLOATING SHAPE DECORATIONS
+════════════════════════════════════════════════════════════════════ */
+.shape-hex {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.shape-diamond {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
